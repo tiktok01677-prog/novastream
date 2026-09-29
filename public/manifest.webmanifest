@@ -1,0 +1,14 @@
+{
+  "name": "NovaStream — Stories Beyond Borders",
+  "short_name": "NovaStream",
+  "description": "A cinematic streaming experience for stories beyond borders.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "categories": ["entertainment", "video"],
+  "icons": [
+    {"src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
+  ]
+}
