@@ -6,6 +6,8 @@ import {episodes, getSeries} from '@/data/catalog';
 import {episodeHref} from './EpisodeCard';
 import {readLastWatched, WATCH_EVENT} from '@/lib/local-library';
 import {useEffect, useState} from 'react';
+import Image from 'next/image';
+import EpisodeProgress from './EpisodeProgress';
 
 export default function ContinueWatching() {
   const [episodeId, setEpisodeId] = useState<string | null>(null);
@@ -24,9 +26,10 @@ export default function ContinueWatching() {
   return <section className="content-section continue-section">
     <header className="section-heading"><div><span>JUMP BACK IN</span><h2>Continue Watching</h2></div></header>
     <Link className="continue-card" href={episodeHref(episode)}>
-      <img src={episode.thumbnail} alt="" width="1280" height="720" />
+      <Image src={episode.thumbnail} alt="" fill sizes="(max-width: 700px) 100vw, 680px" />
       <span className="continue-play"><Play fill="currentColor" /></span>
       <div><small>{seriesItem?.shortTitle ?? 'NOVASTREAM'}</small><strong>Season {episode.season} · {episode.title}</strong><p>Continue from your last visit</p></div>
+      <EpisodeProgress episodeId={episode.id} compact />
     </Link>
   </section>;
 }

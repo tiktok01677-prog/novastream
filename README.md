@@ -1,13 +1,15 @@
 # NovaStream — Private R2 Streaming Web App
 
-NovaStream is a mobile-first Next.js streaming interface for an Android WebView. Version 3 replaces Facebook embeds with private Cloudflare R2 playback through same-origin Pages Functions.
+NovaStream is a mobile-first Next.js streaming interface for an Android WebView. Version 4 adds a final cinematic visual system, three episodes and quota-conscious private Cloudflare R2 playback through same-origin Pages Functions.
 
 ## Included
 
 - Cinematic intro that runs once per app session
 - Responsive mobile and desktop artwork
-- Native MP4 player with seeking, fullscreen, cinema mode and reload
+- Native MP4 player with seeking, fullscreen, cinema mode, resume and next-episode overlay
 - Device-local watch-position resume and Continue Watching
+- Session reuse of unexpired signed links to avoid duplicate playback API requests
+- Duplicate-click protection, background pause and metadata-only loading
 - Private R2 bucket; no Facebook login, branding or external navigation
 - Four-hour signed playback links generated server-side
 - Byte-range responses for fast starts and seeking through long episodes
@@ -22,9 +24,10 @@ The private R2 bucket must be named `novastream-media` and bound to Pages Functi
 | Playback ID | R2 object key | App status |
 | --- | --- | --- |
 | `fatih-s4-e1` | `season-4/episode-01.mp4` | Available |
-| `fatih-s4-e2` | `season-4/episode-02.mp4` | Coming soon |
+| `fatih-s4-e2` | `season-4/episode-02.mp4` | Available after upload |
+| `fatih-s4-e3` | `season-4/episode-03.mp4` | Available after upload |
 
-After uploading Episode 2, change its `available` value to `true` in `data/catalog.ts` and redeploy.
+Episode 2 and Episode 3 are already enabled in the catalogue. Upload both objects at the exact keys above before testing playback.
 
 ## Local commands
 
@@ -47,6 +50,15 @@ npm run build
 6. Redeploy after changing bindings or environment variables.
 
 Never commit an R2 Access Key ID or Secret Access Key. Pages Functions use the R2 binding and do not require S3 credentials.
+
+## Free-quota safeguards
+
+- Static pages do not invoke Functions because `public/_routes.json` includes only `/api/*` and `/media/*`.
+- Video is requested only after a user taps Play; there is no autoplay or video prefetch.
+- A valid signed playback URL is reused within the browser session until shortly before expiry.
+- Repeated Play clicks share one in-flight signing request.
+- Backgrounding the app pauses video transfer.
+- These controls reduce avoidable requests; real viewing and seeking still use R2 reads and Pages Function requests.
 
 ## Android WebView
 

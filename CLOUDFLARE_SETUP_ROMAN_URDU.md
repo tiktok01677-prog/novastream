@@ -6,15 +6,19 @@ R2 Overview kholen, **Manage R2 API Tokens** par jayen aur jo token screenshot m
 
 ## 2. Video ka exact naam check karein
 
-Bucket `novastream-media` ke andar Episode 1 ka object path exact ye hona chahiye:
+Bucket `novastream-media` ke andar video object paths exact ye hone chahiye:
 
 `season-4/episode-01.mp4`
+
+`season-4/episode-02.mp4`
+
+`season-4/episode-03.mp4`
 
 Capital letters aur spaces use na karein. Agar naam different hai to object ko dobara isi naam se upload karein, ya `functions/_shared/media.js` mein key update karein.
 
 ## 3. Code GitHub par upload karein
 
-ZIP extract karke `NovaStream-NextJS` folder ki tamam source files GitHub repository ke root mein upload/push karein. `node_modules` aur `.next` upload na karein.
+ZIP extract karke `NovaStream-NextJS` folder ki tamam source files GitHub repository ke root mein upload/push karein. `node_modules`, `.next`, `out` aur `dist` upload na karein. `package.json` GitHub repository ke seedhe root par nazar aana chahiye.
 
 ## 4. Free Cloudflare Pages project banayein
 
@@ -52,6 +56,10 @@ Optional normal variable:
 
 Bindings save karne ke baad latest deployment ko dobara deploy karein. Episode 1 khol kar Play dabayen. Player private signed link le kar MP4 ko app ke andar stream karega.
 
-## Episode 2 baad mein
+## Episode upload/replace
 
-Episode 2 ko `season-4/episode-02.mp4` naam se upload karein. Phir `data/catalog.ts` mein Episode 2 ke `available` ko `false` se `true` karke GitHub par push karein.
+Episode 1, 2 aur 3 code mein ready hain. R2 mein upar diye gaye exact paths par files upload karein. Isi path par MP4 replace karne se code update ya redeploy ki zaroorat nahi hoti.
+
+## Free quota bachane wala player
+
+Player video ko khud se autoplay/prefetch nahi karta. User ke Play dabane par hi signed link aur video request hoti hai. Ek valid signed link session mein reuse hota hai, double clicks duplicate request nahi banate aur app background mein jane par video pause ho jati hai. Real viewing aur seeking ki genuine requests ko zero nahi kiya ja sakta.

@@ -1,6 +1,7 @@
 const MEDIA_CATALOG = Object.freeze({
   'fatih-s4-e1': {key: 'season-4/episode-01.mp4', contentType: 'video/mp4'},
   'fatih-s4-e2': {key: 'season-4/episode-02.mp4', contentType: 'video/mp4'},
+  'fatih-s4-e3': {key: 'season-4/episode-03.mp4', contentType: 'video/mp4'},
 });
 
 const encoder = new TextEncoder();

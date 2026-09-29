@@ -82,6 +82,7 @@ export function saveWatchProgress(episodeId: string, currentTime: number, durati
     const all = JSON.parse(window.localStorage.getItem(WATCH_PROGRESS_KEY) ?? '{}');
     all[episodeId] = {currentTime, duration, updatedAt: new Date().toISOString()};
     window.localStorage.setItem(WATCH_PROGRESS_KEY, JSON.stringify(all));
+    window.dispatchEvent(new Event(WATCH_EVENT));
   } catch { /* Progress tracking is optional. */ }
 }
 
@@ -90,5 +91,6 @@ export function clearWatchProgress(episodeId: string) {
     const all = JSON.parse(window.localStorage.getItem(WATCH_PROGRESS_KEY) ?? '{}');
     delete all[episodeId];
     window.localStorage.setItem(WATCH_PROGRESS_KEY, JSON.stringify(all));
+    window.dispatchEvent(new Event(WATCH_EVENT));
   } catch { /* Playback completion still succeeds. */ }
 }

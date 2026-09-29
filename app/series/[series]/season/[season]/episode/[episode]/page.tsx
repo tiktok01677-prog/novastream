@@ -37,7 +37,7 @@ export default async function EpisodePage({params}: EpisodePageProps) {
   const seasonEpisodes = getSeriesEpisodes(seriesItem.slug).filter((item) => item.season === episode.season);
 
   return <main className="watch-page">
-    <VideoPlayer episode={episode} seriesTitle={seriesItem.shortTitle} />
+    <VideoPlayer episode={episode} seriesTitle={seriesItem.shortTitle} nextEpisode={adjacent.next} />
     <div className="watch-layout">
       <section className="watch-main">
         <div className="watch-title-row">

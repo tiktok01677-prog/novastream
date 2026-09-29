@@ -7,6 +7,7 @@ export type Episode = {
   label: string;
   description: string;
   thumbnail: string;
+  badge?: string;
   video: {
     provider: 'r2';
     playbackId: string;
@@ -54,6 +55,7 @@ export const episodes: Episode[] = [
     description:
       'Season 4 opens a new chapter in the story of Fatih Sultan Mehmet. Watch the complete episode through the official licensed source.',
     thumbnail: '/images/fatih-s4-e01.webp',
+    badge: 'PREMIERE',
     video: {
       provider: 'r2',
       playbackId: 'fatih-s4-e1',
@@ -73,7 +75,24 @@ export const episodes: Episode[] = [
     video: {
       provider: 'r2',
       playbackId: 'fatih-s4-e2',
-      available: false,
+      available: true,
+    },
+  },
+  {
+    id: 'fatih-s4-e3',
+    seriesSlug: series.slug,
+    season: 4,
+    episode: 3,
+    title: 'Episode 3',
+    label: 'A New Order',
+    description:
+      'A sealed command and a dangerous new turn push Mehmed toward the next stage of his campaign.',
+    thumbnail: '/images/fatih-s4-e03.webp',
+    badge: 'NEW',
+    video: {
+      provider: 'r2',
+      playbackId: 'fatih-s4-e3',
+      available: true,
     },
   },
 ];
