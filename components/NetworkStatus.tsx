@@ -15,5 +15,5 @@ export default function NetworkStatus() {
       window.removeEventListener('offline', update);
     };
   }, []);
-  return offline ? <div className="network-status" role="status"><WifiOff /> You are offline. Video playback needs an internet connection.</div> : null;
+  return offline ? <div className="network-status" role="status"><WifiOff /> You are offline. Downloaded episodes are still available.</div> : null;
 }

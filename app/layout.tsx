@@ -6,6 +6,8 @@ import BottomNav from '@/components/BottomNav';
 import Splash from '@/components/Splash';
 import NetworkStatus from '@/components/NetworkStatus';
 import Footer from '@/components/Footer';
+import NativeDownloadBridge from '@/components/NativeDownloadBridge';
+import ServiceWorkerRegister from '@/components/ServiceWorkerRegister';
 
 const splashStateScript = `
   (function () {
@@ -36,6 +38,8 @@ export default function RootLayout({children}:{children:React.ReactNode}) {
   return <html lang="en">
     <body>
       <Script id="novastream-splash-state" strategy="beforeInteractive">{splashStateScript}</Script>
+      <ServiceWorkerRegister />
+      <NativeDownloadBridge />
       <Splash />
       <NetworkStatus />
       <Header />

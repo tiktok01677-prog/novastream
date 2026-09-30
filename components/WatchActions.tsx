@@ -4,6 +4,7 @@ import {Check, Share2} from 'lucide-react';
 import {useState} from 'react';
 import type {Episode} from '@/data/catalog';
 import SaveButton from './SaveButton';
+import DownloadAction from './DownloadAction';
 
 export default function WatchActions({episode, seriesTitle}:{episode:Episode; seriesTitle:string}) {
   const [copied, setCopied] = useState(false);
@@ -21,6 +22,7 @@ export default function WatchActions({episode, seriesTitle}:{episode:Episode; se
   };
 
   return <div className="watch-actions">
+    <DownloadAction episode={episode} seriesTitle={seriesTitle} />
     <SaveButton kind="episodes" id={episode.id} />
     <button className="save-button" type="button" onClick={share}>{copied ? <Check /> : <Share2 />}<span>{copied ? 'Copied' : 'Share'}</span></button>
   </div>;

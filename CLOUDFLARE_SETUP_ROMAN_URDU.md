@@ -1,8 +1,8 @@
 # NovaStream Cloudflare Setup — Roman Urdu
 
-## 1. Exposed token foran revoke karein
+## 1. Purana exposed token foran revoke karein
 
-R2 Overview kholen, **Manage R2 API Tokens** par jayen aur jo token screenshot mein share hua tha usay **Revoke** karein. NovaStream v12 ko S3 Access Key ki zaroorat nahi hai.
+R2 Overview kholen, **Manage R2 API Tokens** par jayen aur jo purana token screenshot mein share hua tha usay **Revoke** karein. Offline download setup ke liye baad mein naya, sirf Object Read permission wala token banayein; purana shared token dobara use na karein.
 
 ## 2. Video ka exact naam check karein
 
@@ -63,3 +63,17 @@ Episode 1, 2 aur 3 code mein ready hain. R2 mein upar diye gaye exact paths par 
 ## Free quota bachane wala player
 
 Player video ko khud se autoplay/prefetch nahi karta. User ke Play dabane par hi signed link aur video request hoti hai. Ek valid signed link session mein reuse hota hai, double clicks duplicate request nahi banate aur app background mein jane par video pause ho jati hai. Real viewing aur seeking ki genuine requests ko zero nahi kiya ja sakta.
+
+## Android direct offline downloads (recommended)
+
+Android app ke private offline downloads ko kam requests ke saath chalane ke liye Cloudflare Pages > Settings > Variables and Secrets mein yeh encrypted secrets add karein:
+
+- `R2_ACCOUNT_ID`
+- `R2_BUCKET_NAME`
+- `R2_ACCESS_KEY_ID`
+- `R2_SECRET_ACCESS_KEY`
+- Optional `DOWNLOAD_TTL_SECONDS=21600`
+
+R2 API token ko sirf `novastream-media` bucket ke **Object Read** permission dein. Website ek temporary signed link banayegi, phir Android app video seedha R2 se apni private app storage mein save karegi. Link maximum 12 hours ka rakha gaya hai.
+
+Agar direct-download secrets abhi add na hon to existing `MEDIA` binding aur `PLAYBACK_SECRET` ke through secure fallback kaam karega. Download button normal browser ke public Downloads folder mein MP4 save nahi karta; yeh NovaStream Android WebView ke native bridge ko command deta hai.

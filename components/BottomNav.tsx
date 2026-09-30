@@ -1,12 +1,13 @@
 'use client';
 
 import Link from 'next/link';
-import {Bookmark, Clapperboard, Home, Search} from 'lucide-react';
+import {Bookmark, Clapperboard, Download, Home, Search} from 'lucide-react';
 import {usePathname} from 'next/navigation';
 
 const items = [
   {href: '/', label: 'Home', Icon: Home},
   {href: '/browse/', label: 'Browse', Icon: Clapperboard},
+  {href: '/downloads/', label: 'Downloads', Icon: Download},
   {href: '/search/', label: 'Search', Icon: Search},
   {href: '/my-list/', label: 'Saved', Icon: Bookmark},
 ];

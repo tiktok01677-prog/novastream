@@ -1,6 +1,6 @@
 # NovaStream — Private R2 Streaming Web App
 
-NovaStream is a mobile-first Next.js streaming interface for an Android WebView. Version 4 adds a final cinematic visual system, three episodes and quota-conscious private Cloudflare R2 playback through same-origin Pages Functions.
+NovaStream is a mobile-first Next.js streaming interface for an Android WebView. Version 4.1 adds a compact NS intro, three episodes, quota-conscious private Cloudflare R2 playback and the complete web side of Android offline downloads.
 
 ## Included
 
@@ -16,6 +16,8 @@ NovaStream is a mobile-first Next.js streaming interface for an Android WebView.
 - Detailed series, season and episode routes
 - Static production export in `dist/`
 - Search indexing disabled for private/unlisted distribution
+- Downloads screen with progress, pause/resume, cancel, delete and offline-play controls
+- Service-worker app-shell cache; private API and video responses are never cached
 
 ## Video mapping
 
@@ -49,7 +51,23 @@ npm run build
 5. Optionally add `PLAYBACK_TTL_SECONDS=14400` as a normal environment variable.
 6. Redeploy after changing bindings or environment variables.
 
-Never commit an R2 Access Key ID or Secret Access Key. Pages Functions use the R2 binding and do not require S3 credentials.
+Never commit secrets to GitHub. Normal streaming uses the private R2 binding and does not require S3 credentials.
+
+## Android offline download bridge
+
+The website never saves an episode into the browser's public Downloads folder. Inside the Android WebView, the episode page requests a short-lived download URL and sends the episode metadata to `window.NovaStreamAndroid.startDownload(...)`. The Android app owns the private file, background progress, pause/resume, offline playback and deletion. Native progress returns to the web UI through `window.NovaStreamDownloads.receive(...)`.
+
+The Downloads page is `/downloads/`. The last native snapshot and static website shell are cached so an interrupted connection does not leave a blank screen. Private `/api/*` and `/media/*` responses are excluded from the service-worker cache.
+
+For the lowest request use, add these encrypted Cloudflare secrets:
+
+- `R2_ACCOUNT_ID`
+- `R2_BUCKET_NAME`
+- `R2_ACCESS_KEY_ID`
+- `R2_SECRET_ACCESS_KEY`
+- Optional: `DOWNLOAD_TTL_SECONDS` (default `21600`, maximum `43200`)
+
+Create an R2 API token restricted to Object Read for this bucket. If these four R2 values are absent, `/api/download/*` safely falls back to the existing private Pages Function media route.
 
 ## Free-quota safeguards
 
